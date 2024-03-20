@@ -1,32 +1,47 @@
 body {
+  background-image: url(assets/initialScreen.jpeg);
+  background-size: cover;
+  background-position: center center; /*use top*/
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Background image is fixed in the viewport so that it doesn’t move when the content’s height is greater than the image’s height */
   background-color: #0a0a23;
+  display: flex;
+  justify-content: center;
 }
 
 #text {
+  line-height: 150%;
   background-color: #0a0a23;
   color: #ffffff;
   padding: 10px;
 }
 
 #game {
-  max-width: 500px;
+  font-family: "Press Start 2P", system-ui;
+  font-size: clamp(0.5rem, 1.5vh, 1rem);
+  max-width: 60%;
   max-height: 400px;
   background-color: #ffffff;
-  color: #ffffff;
-  margin: 30px auto 0px;
+  margin: 30px auto;
   padding: 10px;
+  position: fixed;
+  bottom: 0;
+  border-radius: 10px;
 }
 
 #controls,
 #stats {
-  border: 1px solid #0a0a23;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   padding: 5px;
   color: #0a0a23;
 }
 
 #monsterStats {
   display: none;
-  border: 1px solid #0a0a23;
+  flex-direction: row;
+  justify-content: center;
   padding: 5px;
   color: #ffffff;
   background-color: #c70d0d;
@@ -37,9 +52,13 @@ body {
 }
 
 button {
+  font-family: "Press Start 2P", system-ui;
+  font-size: clamp(0.5rem, 1.5vh, 1rem);
   cursor: pointer;
   color: #0a0a23;
   background-color: #feac32;
   background-image: linear-gradient(#fecc4c, #ffac33);
   border: 3px solid #feac32;
+  margin-left: 1rem;
+  border-radius: 5px;
 }

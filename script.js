@@ -6,6 +6,7 @@ let fighting;
 let monsterHealth;
 let inventory = ["stick"];
 
+const body = document.querySelector("body");
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
@@ -41,12 +42,14 @@ const monsters = [
 ];
 const locations = [
   {
+    //town
     name: "town square",
     "button text": ["Go to store", "Go to cave", "Fight dragon"],
     "button functions": [goStore, goCave, fightDragon],
     text: 'You are in the town square. You see a sign that says "Store".',
   },
   {
+    //store
     name: "store",
     "button text": [
       "Buy 10 health (10 gold)",
@@ -57,18 +60,21 @@ const locations = [
     text: "You enter the store.",
   },
   {
+    //cave
     name: "cave",
     "button text": ["Fight slime", "Fight fanged beast", "Go to town square"],
     "button functions": [fightSlime, fightBeast, goTown],
     text: "You enter the cave. You see some monsters.",
   },
   {
+    //fight
     name: "fight",
     "button text": ["Attack", "Dodge", "Run"],
     "button functions": [attack, dodge, goTown],
     text: "You are fighting a monster.",
   },
   {
+    //win fight
     name: "kill monster",
     "button text": [
       "Go to town square",
@@ -79,18 +85,21 @@ const locations = [
     text: 'The monster screams "Arg!" as it dies. You gain experience points and find gold.',
   },
   {
+    //lose fight
     name: "lose",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
     text: "You die. &#x2620;",
   },
   {
+    //win game
     name: "win",
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"],
     "button functions": [restart, restart, restart],
     text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;",
   },
   {
+    //easter egg
     name: "easter egg",
     "button text": ["2", "8", "Go to town square?"],
     "button functions": [pickTwo, pickEight, goTown],
@@ -116,14 +125,17 @@ function update(location) {
 
 function goTown() {
   update(locations[0]);
+  body.style.backgroundImage = "url(assets/initialScreen.jpeg)";
 }
 
 function goStore() {
   update(locations[1]);
+  body.style.backgroundImage = "url(assets/store.jpeg)";
 }
 
 function goCave() {
   update(locations[2]);
+  body.style.backgroundImage = "url(assets/fight_slime-fangedBeast.jpeg)";
 }
 
 function buyHealth() {
@@ -172,11 +184,13 @@ function sellWeapon() {
 function fightSlime() {
   fighting = 0;
   goFight();
+  body.style.backgroundImage = "url(assets/fightingSlime.jpeg)";
 }
 
 function fightBeast() {
   fighting = 1;
   goFight();
+  body.style.backgroundImage = "url(assets/fightingBeast.jpeg)";
 }
 
 function fightDragon() {
@@ -240,14 +254,38 @@ function defeatMonster() {
   goldText.innerText = gold;
   xpText.innerText = xp;
   update(locations[4]);
+  switch (monsters[fighting].name) {
+    case "slime":
+      body.style.backgroundImage = "url(assets/slime-loses.jpeg)";
+      break;
+    case "fanged beast":
+      body.style.backgroundImage = "url(assets/beast-loses.jpeg)";
+      break;
+    default:
+      break;
+  }
 }
 
 function lose() {
   update(locations[5]);
+  switch (monsters[fighting].name) {
+    case "slime":
+      body.style.backgroundImage = "url(assets/slime-wins.jpeg)";
+      break;
+    case "fanged beast":
+      body.style.backgroundImage = "url(assets/beast-wins.jpeg)";
+      break;
+    case "dragon":
+      body.style.backgroundImage = "url(assets/dragon-wins.jpeg)";
+      break;
+    default:
+      break;
+  }
 }
 
 function winGame() {
   update(locations[6]);
+  body.style.backgroundImage = "url(assets/dragon-loses.jpeg)";
 }
 
 function restart() {
@@ -264,6 +302,7 @@ function restart() {
 
 function easterEgg() {
   update(locations[7]);
+  body.style.backgroundImage = "url(assets/easter-egg.jpeg)";
 }
 
 function pickTwo() {
@@ -287,12 +326,15 @@ function pick(guess) {
     text.innerText += "Right! You win 20 gold!";
     gold += 20;
     goldText.innerText = gold;
+    body.style.backgroundImage = "url(assets/win-bet.jpeg)";
   } else {
     text.innerText += "Wrong! You lose 10 health!";
     health -= 10;
     healthText.innerText = health;
+    body.style.backgroundImage = "url(assets/lose-bet.jpeg)";
     if (health <= 0) {
       lose();
+      body.style.backgroundImage = "url(assets/lose-bet.jpeg)";
     }
   }
 }
